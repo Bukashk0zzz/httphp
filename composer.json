@@ -8,6 +8,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
+        "php": "7.3",
+        "ext-async": "*",
         "psr/http-message": "^1.0@dev",
         "psr/http-factory": "^1.0@dev",
         "guzzlehttp/psr7": "^1.5@dev",

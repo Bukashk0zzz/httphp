@@ -58,6 +58,17 @@ class Worker
      */
     private $id;
 
+    /**
+     * Worker constructor.
+     *
+     * @param \Concurrent\Network\Server $server
+     * @param CancellationHandler        $cancellation
+     * @param RequestReaderInterface     $reader
+     * @param RequestHandlerInterface    $handler
+     * @param int|null                   $maxmemory
+     * @param int|null                   $maxrequests
+     * @param int|null                   $timeout
+     */
     public function __construct(
         \Concurrent\Network\Server $server,
         CancellationHandler $cancellation,

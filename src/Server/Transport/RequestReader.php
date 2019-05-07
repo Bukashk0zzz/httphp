@@ -15,17 +15,28 @@ use Psr\Http\Message\RequestInterface;
 class RequestReader implements RequestReaderInterface
 {
     public const CHUNK_SIZE = 4;
-    public $crlfSeq = 0;
-    public $seq = 0;
-    public $crlfPos = 0;
+
+    /**
+     * @var int
+     */
     public $maxHeaderSize = 8192; //8Kb
+    /**
+     * @var int
+     */
     public $maxBodySize = 1073741824; //1GB - Temporary limit
 
+    /**
+     * @param SocketStream $stream
+     *
+     * @return RequestInterface
+     * @throws \Concurrent\Stream\PendingReadException
+     * @throws \Concurrent\Stream\StreamClosedException
+     */
     public function read(SocketStream $stream): RequestInterface
     {
         $method = $target = $protocolVersion = $request = null;
         $rawHeaders = $buffer = $line = null;
-        $this->crlfSeq = $this->crlfPos = $this->seq = $readed = 0;
+        $readed = 0;
 
         $chunkSize = self::CHUNK_SIZE;
         while($stream->isAlive() && null !== ($chunk = $stream->read($chunkSize))) {
@@ -76,6 +87,12 @@ class RequestReader implements RequestReaderInterface
     }
 
 
+    /**
+     * @param string      $buffer
+     * @param string|null $result
+     *
+     * @return bool
+     */
     private function readLine(string &$buffer, ?string &$result = null): bool
     {
         $carry = '';
@@ -105,6 +122,11 @@ class RequestReader implements RequestReaderInterface
         return [strtoupper($method), $target, ltrim($protocolVersion, 'HTTP/')];
     }
 
+    /**
+     * @param string|null $rawHeaders
+     *
+     * @return array
+     */
     private function parseHeaders(?string $rawHeaders): array
     {
         if ($rawHeaders === null) {
@@ -119,7 +141,12 @@ class RequestReader implements RequestReaderInterface
         }
     }
 
-    private function ensureProtocolVersionSupported(string $protocolVersion)
+    /**
+     * @param string $protocolVersion
+     *
+     * @return void
+     */
+    private function ensureProtocolVersionSupported(string $protocolVersion): void
     {
         [$major, $minor] = explode('.', $protocolVersion);
         if ((int) $major > 1) throw new VersionNotSupportedException();

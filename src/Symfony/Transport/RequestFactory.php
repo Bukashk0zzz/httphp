@@ -7,6 +7,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RequestFactory
 {
+    /**
+     * @param RequestInterface $req
+     *
+     * @return Request
+     */
     public function createRequest(RequestInterface $req): Request
     {
         $query = [];

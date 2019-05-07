@@ -20,12 +20,23 @@ class RequestHandler implements RequestHandlerInterface
      */
     private $kernel;
 
+    /**
+     * RequestHandler constructor.
+     *
+     * @param KernelInterface $kernel
+     */
     public function __construct(KernelInterface $kernel)
     {
         $this->factory = new RequestFactory();
         $this->kernel = $kernel;
     }
 
+    /**
+     * @param RequestInterface        $request
+     * @param ResponseWriterInterface $writer
+     *
+     * @return ResponseInterface|null
+     */
     public function __invoke(RequestInterface $request, ResponseWriterInterface $writer): ?ResponseInterface
     {
         $symfonyRequest = $this->factory->createRequest($request);

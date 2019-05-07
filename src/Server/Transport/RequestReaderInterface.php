@@ -7,5 +7,10 @@ use Psr\Http\Message\RequestInterface;
 
 interface RequestReaderInterface
 {
+    /**
+     * @param SocketStream $socket
+     *
+     * @return RequestInterface
+     */
     public function read(SocketStream $socket): RequestInterface;
 }

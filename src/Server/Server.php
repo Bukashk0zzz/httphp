@@ -20,7 +20,13 @@ use Psr\Log\LoggerInterface;
  */
 class Server
 {
+    /**
+     * @var int|null
+     */
     protected $maxmemory;
+    /**
+     * @var int|null
+     */
     protected $maxrequests;
     /**
      * @var TcpServer|Server
@@ -30,6 +36,9 @@ class Server
      * @var Channel
      */
     protected $cancellation;
+    /**
+     * @var bool
+     */
     protected $shutdown = false;
 
     /**
@@ -41,6 +50,14 @@ class Server
      */
     protected $handler;
 
+    /**
+     * Server constructor.
+     *
+     * @param RequestHandlerInterface $handler
+     * @param LoggerInterface|null    $logger
+     * @param int|null                $maxmemory
+     * @param int|null                $maxrequests
+     */
     public function __construct(
         RequestHandlerInterface $handler,
         ?LoggerInterface $logger = null,
@@ -54,6 +71,12 @@ class Server
         $this->maxrequests = $maxrequests;
     }
 
+    /**
+     * @param string $address
+     * @param int    $port
+     *
+     * @return void
+     */
     public function listen(string $address = '0.0.0.0', int $port = 3000)
     {
         $this->registerSignalHandler();
@@ -61,6 +84,9 @@ class Server
         $this->startWorker();
     }
 
+    /**
+     * @return void
+     */
     public function shutdown(): void
     {
         $this->shutdown = true;
@@ -71,11 +97,20 @@ class Server
         }
     }
 
+    /**
+     * @param string $address
+     * @param int    $port
+     *
+     * @return void
+     */
     protected function createServer(string $address, int $port)
     {
         $this->server = TcpServer::bind($address, $port);
     }
 
+    /**
+     * @return Awaitable
+     */
     protected function startWorker(): Awaitable
     {
         $worker = new Worker(
@@ -94,6 +129,9 @@ class Server
         return $worker->start();
     }
 
+    /**
+     * @return void
+     */
     protected function registerSignalHandler()
     {
         Task::asyncWithContext(Context::current(), function () {
