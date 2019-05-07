@@ -1,0 +1,33 @@
+{
+    "name": "httphp/httphp",
+    "authors": [
+        {
+            "name": "Eugene Terentev",
+            "email": "eugene@terentev.net"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "psr/http-message": "^1.0@dev",
+        "psr/http-factory": "^1.0@dev",
+        "guzzlehttp/psr7": "^1.5@dev",
+        "amphp/http": "dev-master",
+        "monolog/monolog": "^2.0@dev",
+        "guzzlehttp/guzzle": "^6.3@dev"
+    },
+    "require-dev": {
+        "concurrent-php/async-api": "dev-master",
+        "phpunit/phpunit": "^8.2@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "HTTPHP\\": "src/Server/",
+            "HTTPHP\\Symfony\\": "src/Symfony/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "HTTPHP\\Tests\\": "tests/"
+        }
+    }
+}

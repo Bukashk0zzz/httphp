@@ -1,0 +1,6 @@
+### Composer
+/vendor/
+
+### PHPunit
+.phpunit.result.cache
+phpunit.xml
