@@ -1,0 +1,10 @@
+version: "3.6"
+services:
+  echo:
+    image: trntv/php-async:latest
+    privileged: true
+    ports:
+      - 127.0.0.1:3000:3000
+    volumes:
+      - ./:/app
+    command: php /app/examples/echo.php
