@@ -84,6 +84,9 @@
     "guzzlehttp/psr7": {
         "version": "1.5.2"
     },
+    "httphp/httphp": {
+        "version": "dev-master"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },

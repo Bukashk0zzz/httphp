@@ -3,14 +3,16 @@
 namespace HTTPHP\Transport\Exception;
 
 use HTTPHP\RFC\RFC723x;
+use RuntimeException;
+use Throwable;
 
-class TransportException extends \RuntimeException
+class TransportException extends RuntimeException
 {
-    public function __construct(int $code = 0, string $message = '')
+    public function __construct(?int $code = null, ?string $message = null, Throwable $previous = null)
     {
-        if ($message === '' && $code !== 0) {
-            $message = RFC723x::REASONS[$code] ?? '';
+        if ($message === null && $code !== null) {
+            $message = RFC723x::REASONS[$code] ?? null;
         }
-        parent::__construct($message, $code);
+        parent::__construct($message, $code, $previous);
     }
 }

@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+namespace HTTPHP\Tests\Server;
+
 use Concurrent\Context;
 use Concurrent\Task;
 use Concurrent\Timer;

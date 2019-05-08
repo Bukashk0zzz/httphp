@@ -7,6 +7,7 @@ use Amp\Http\Rfc7230;
 use Concurrent\Network\SocketStream;
 use GuzzleHttp\Psr7\Request;
 use HTTPHP\Transport\Exception\BadRequestException;
+use HTTPHP\Transport\Exception\LengthRequiredException;
 use HTTPHP\Transport\Exception\PayloadTooLargeException;
 use HTTPHP\Transport\Exception\UpgradeRequiredException;
 use HTTPHP\Transport\Exception\VersionNotSupportedException;
@@ -39,7 +40,7 @@ class RequestReader implements RequestReaderInterface
         $readed = 0;
 
         $chunkSize = self::CHUNK_SIZE;
-        while($stream->isAlive() && null !== ($chunk = $stream->read($chunkSize))) {
+        while(null !== ($chunk = $stream->read($chunkSize))) {
             $readed += $chunkSize;
             if ($readed >= $this->maxHeaderSize) {
                 throw new PayloadTooLargeException($this->maxHeaderSize);
@@ -76,12 +77,14 @@ class RequestReader implements RequestReaderInterface
             $contentLength = $request->hasHeader('Content-Length') ?  $request->getHeader('Content-Length')[0] : null;
 
             if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'], true)) {
-                if ($contentLength === null) throw new BadRequestException();
+                if ($contentLength === null) throw new LengthRequiredException();
                 if ($this->maxBodySize && $contentLength > $this->maxBodySize) throw new PayloadTooLargeException($this->maxBodySize);
                 $request = $request->withBody(new RequestBodyReader($stream->getReadableStream(), (int) $contentLength));
             }
             break;
         }
+
+        if ($request === null) throw new BadRequestException();
 
         return $request;
     }

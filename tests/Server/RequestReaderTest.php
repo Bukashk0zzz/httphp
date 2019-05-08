@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+namespace HTTPHP\Tests\Server;
+
 use Concurrent\Network\Pipe;
 use Concurrent\Task;
 use HTTPHP\Transport\RequestReader;
@@ -9,11 +11,33 @@ class RequestReaderTest extends TestCase
 {
     protected function setUp(): void
     {
-        $this->markTestIncomplete();
         parent::setUp();
     }
 
     public function testReadGet()
+    {
+        $file = sprintf('%s/async-test.sock', sys_get_temp_dir());
+        touch($file);
+        chmod($file, 0777);
+
+        [$pipe1, $pipe2] = Pipe::pair();
+        $task = Task::async(function () use($pipe2) {
+            $reader = new RequestReader();
+            $request = $reader->read($pipe2);
+            $this->assertEquals('/concurrent-php/ext-async/tree/master/examples/tcp', $request->getUri());
+            $this->assertTrue($request->hasHeader('Upgrade-Insecure-Requests'));
+            $this->assertEquals('1', $request->getHeader('Upgrade-Insecure-Requests')[0]);
+        });
+
+        (new TestClient())->write($pipe1);
+        $pipe1->flush();
+
+        $a = 1;
+
+        Task::await($task);
+    }
+
+    public function testPayloadTooLarge()
     {
         $file = sprintf('%s/async-test.sock', sys_get_temp_dir());
         touch($file);

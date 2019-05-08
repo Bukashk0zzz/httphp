@@ -21,6 +21,7 @@ To do:
 - [ ] multipart/form-data
 - [ ] Encodings, mb_* functions
 - [ ] SSL
+- [ ] static files
 - [ ] SIGINT, SIGTERM, SIGKILL
 - [ ] Intercept memory error
 - [ ] Memory metrics
@@ -32,8 +33,8 @@ To do:
 - [X] Symfony command
 - [ ] Symfony kernel.terminate listener
 
-- [ ] 408
-- [ ] 411
+- [ ] 408 - Request timeout
+- [X] 411 - Length required
 - [X] 413 - Request size limit (headers, body)
 - [X] 426 - Upgrade required
 - [X] 505 - Version not supported

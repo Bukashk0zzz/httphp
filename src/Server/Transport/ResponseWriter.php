@@ -109,7 +109,7 @@ class ResponseWriter implements ResponseWriterInterface
 
             $this->stream->write($data);
         } catch (StreamException $e) {
-            throw new TransportException($e->getMessage(), $e->getCode(), $e);
+            throw new TransportException(null, $e->getMessage(), $e);
         }
     }
 }
