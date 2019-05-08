@@ -29,3 +29,5 @@ services:
     App\Events\TerminateListener:
         tags:
             - { name: kernel.event_listener, event: kernel.terminate }
+
+    HTTPHP\Symfony\Command\HttpCommand:

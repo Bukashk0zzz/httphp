@@ -8,18 +8,19 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "7.3",
+        "php": "^7.3",
         "ext-async": "*",
-        "psr/http-message": "^1.0@dev",
-        "psr/http-factory": "^1.0@dev",
-        "guzzlehttp/psr7": "^1.5@dev",
-        "amphp/http": "dev-master",
-        "monolog/monolog": "^2.0@dev",
-        "guzzlehttp/guzzle": "^6.3@dev"
+        "psr/http-message": "^1.0",
+        "psr/http-factory": "^1.0",
+        "guzzlehttp/psr7": "^1.5",
+        "amphp/http": "dev-master@dev",
+        "guzzlehttp/guzzle": "^6.3",
+        "psr/log": "^1.1"
     },
     "require-dev": {
-        "concurrent-php/async-api": "dev-master",
-        "phpunit/phpunit": "^8.2@dev"
+        "concurrent-php/async-api": "dev-master@dev",
+        "phpunit/phpunit": "^8.2@dev",
+        "monolog/monolog": "^1.22"
     },
     "autoload": {
         "psr-4": {
