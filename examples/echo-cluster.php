@@ -1,7 +1,7 @@
 <?php
 
+use HTTPHP\Cluster;
 use HTTPHP\Handler\RequestHandlerInterface;
-use HTTPHP\Server;
 use HTTPHP\Transport\ResponseWriterInterface;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
@@ -10,16 +10,15 @@ use Psr\Http\Message\ResponseInterface;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$log = new Logger('log');
-$log->pushHandler(new ErrorLogHandler());
-$log->info('START');
+$logger = new Logger('log');
+$logger->pushHandler(new ErrorLogHandler());
 
-$server = new Server(new class implements RequestHandlerInterface {
+$server = new Cluster(new class implements RequestHandlerInterface {
     public function __invoke(RequestInterface $request, ResponseWriterInterface $writer): ?ResponseInterface
     {
         $writer->writeBody(var_export($request, true));
         return null;
     }
-}, true, $log);
+}, $logger, 128 * 1024 * 1024, 2 ** 16 );
 
 $server->listen();

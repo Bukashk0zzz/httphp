@@ -15,20 +15,26 @@ To do:
 - [X] GET, HEAD, OPTIONS, CONNECT
 - [X] POST, PATCH, PUT (Stream body)
 - [X] Echo server (for testing purposes)
-- [ ] Intercept memory error
 - [ ] Read, Handle and Write timeouts
-- [ ] Forms: multipart/form-data, application/x-www-form-urlencoded
+- [ ] application/x-www-form-urlencoded
+- [ ] multipart/form-data
+- [ ] Encodings, mb_* functions
 - [ ] SSL
 - [ ] SIGINT, SIGTERM, SIGKILL
+- [ ] Intercept memory error
 - [ ] Memory metrics
+- [ ] Compression
 
-- [ ] Encodings, mb_* functions
+- [ ] Integrate server with DI container
+- [ ] Symfony command
 
 - [ ] 408
 - [ ] 411
 - [X] 413 - Request size limit (headers, body)
 - [X] 426 - Upgrade required
 - [X] 505 - Version not supported
+
+
 
 - [ ] Keep-alive support, HTTP/2
 - [ ] file watcher

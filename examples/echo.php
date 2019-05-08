@@ -10,8 +10,8 @@ use Psr\Http\Message\ResponseInterface;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$log = new Logger('log');
-$log->pushHandler(new ErrorLogHandler());
+$logger = new Logger('log');
+$logger->pushHandler(new ErrorLogHandler());
 
 $server = new Server(new class implements RequestHandlerInterface {
     public function __invoke(RequestInterface $request, ResponseWriterInterface $writer): ?ResponseInterface
@@ -19,6 +19,6 @@ $server = new Server(new class implements RequestHandlerInterface {
         $writer->writeBody(var_export($request, true));
         return null;
     }
-}, $log);
+}, $logger);
 
 $server->listen();

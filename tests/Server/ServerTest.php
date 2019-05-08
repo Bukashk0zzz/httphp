@@ -15,6 +15,11 @@ use Psr\Http\Message\ResponseInterface;
 
 class ServerTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        $this->markTestIncomplete();
+        parent::setUp();
+    }
 
     public function testListen()
     {
@@ -29,32 +34,18 @@ class ServerTest extends TestCase
             {
                 $writer->write(var_export($request, true));
             }
-        }, false, $log);
+        }, $log);
 
         $listenTask = Task::asyncWithContext(Context::background(), function() use($server) {
-            var_dump('listening');
-            ob_flush();
             $server->listen();
-            var_dump('exited');
-            ob_flush();
         });
 
-        var_dump('before_timeout');
-        ob_flush();
         $task = Task::async(function () {
-            var_dump('timeout');
-            ob_flush();
             (new Timer(3000))->awaitTimeout();
             $client = new Client();
-            var_dump('sending');
-            ob_flush();
             $response = $client->getAsync('http://127.0.0.1:3000/');
-            $response->then(function() {
-                var_dump('sended');
-                ob_flush();
-                $a = $response->getBody()->getContents();
-                var_dump($a);
-                ob_flush();
+            $response->then(function() use($response) {
+                $response->getBody()->getContents();
             });
         });
 
