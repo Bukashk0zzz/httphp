@@ -2,7 +2,7 @@ FROM php:7.3-cli
 
 ENV EXT_ASYNC_REV master
 
-RUN apt-get update -y && apt-get install -y gcc g++ libuv1 libuv1-dev libssl-dev autoconf automake libtool libjudy-dev htop
+RUN apt-get update -y && apt-get install -y gcc g++ libuv1 libuv1-dev libssl-dev autoconf automake libtool libjudy-dev
 
 WORKDIR /ext-async
 RUN curl -LSs https://github.com/concurrent-php/ext-async/tarball/${EXT_ASYNC_REV} | tar -xz -C "/ext-async" --strip-components 1
@@ -15,4 +15,5 @@ RUN pecl install xdebug memprof && \
 
 COPY php.ini /usr/local/etc/php/conf.d/php.ini
 
-
+RUN mkdir /app
+WORKDIR /app

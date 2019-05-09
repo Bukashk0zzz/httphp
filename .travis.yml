@@ -4,8 +4,15 @@ services:
   - docker
 
 before_script:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t trntv/php-async:latest -f .ci/docker/Dockerfile .ci/docker/
 
 script:
-  - docker build -t trntv/php-async:latest .
-  - docker push trntv/php-async
+  - composer install --ignore-platform-reqs
+  - export DIR=$(pwd)
+  - docker run -v ${DIR}/:/app trntv/php-async vendor/bin/phpunit -c phpunit.xml.dist
+
+deploy:
+  provider: script
+  script: bash .ci/travis/deploy.sh
+  on:
+    branch: master
