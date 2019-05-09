@@ -39,6 +39,7 @@ To do:
 - [X] 426 - Upgrade required
 - [X] 505 - Version not supported
 
+- [ ] Tests
 - [ ] Profiling & Optimization (Reader, Worker, Handler, Writer)
 
 - [ ] Keep-alive support, HTTP/2
@@ -53,6 +54,8 @@ curl http://127.0.0.1:3000/
 
 Symfony:
 ```
+cd examples/symfony
+composer install
 docker-compose run --rm -T echo php /app/examples/symfony/bin/console http:serve --address 0.0.0.0
 curl http://127.0.0.1:3000/
 ```

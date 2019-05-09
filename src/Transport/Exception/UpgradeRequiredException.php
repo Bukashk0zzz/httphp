@@ -2,14 +2,14 @@
 
 namespace HTTPHP\Transport\Exception;
 
-use HTTPHP\RFC\RFC723x;
+use HTTPHP\RFC\Status;
 
 class UpgradeRequiredException extends TransportException
 {
     private $requestedVersion;
     public function __construct(string $requestedVersion)
     {
-        parent::__construct(RFC723x::STATUS_UPGRADE_REQUIRED);
+        parent::__construct(Status::UPGRADE_REQUIRED);
         $this->requestedVersion = $requestedVersion;
     }
 

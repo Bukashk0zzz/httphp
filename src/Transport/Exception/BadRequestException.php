@@ -2,7 +2,7 @@
 
 namespace HTTPHP\Transport\Exception;
 
-use HTTPHP\RFC\RFC723x;
+use HTTPHP\RFC\Status;
 
 class BadRequestException extends TransportException
 {
@@ -14,7 +14,7 @@ class BadRequestException extends TransportException
     public function __construct(?string $data = null)
     {
         $this->data = $data;
-        parent::__construct(RFC723x::STATUS_BAD_REQUEST);
+        parent::__construct(Status::BAD_REQUEST);
     }
 
     public function getData(): ?string

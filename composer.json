@@ -24,7 +24,7 @@
     },
     "autoload": {
         "psr-4": {
-            "HTTPHP\\": "src/Server/",
+            "HTTPHP\\": "src/",
             "HTTPHP\\Symfony\\": "src/Symfony/"
         }
     },

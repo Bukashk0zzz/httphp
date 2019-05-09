@@ -2,9 +2,9 @@
 
 namespace HTTPHP\Transport\Exception;
 
-use HTTPHP\RFC\RFC723x;
+use HTTPHP\RFC\Status;
 
-class PayloadTooLargeException extends TransportException
+class RequestHeaderFieldsTooLarge extends TransportException
 {
     /**
      * @var int
@@ -13,7 +13,7 @@ class PayloadTooLargeException extends TransportException
 
     public function __construct(int $limit)
     {
-        parent::__construct(RFC723x::STATUS_PAYLOAD_TOO_LARGE);
+        parent::__construct(Status::REQUEST_HEADER_FIELDS_TOO_LARGE);
         $this->limit = $limit;
     }
 

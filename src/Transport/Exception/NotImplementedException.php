@@ -2,12 +2,12 @@
 
 namespace HTTPHP\Transport\Exception;
 
-use HTTPHP\RFC\RFC723x;
+use HTTPHP\RFC\Status;
 
 class NotImplementedException extends TransportException
 {
     public function __construct()
     {
-        parent::__construct(RFC723x::STATUS_NOT_IMPLEMENTED);
+        parent::__construct(Status::NOT_IMPLEMENTED);
     }
 }

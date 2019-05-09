@@ -3,7 +3,7 @@
 namespace HTTPHP\Symfony\Handler;
 
 use HTTPHP\Handler\RequestHandlerInterface;
-use HTTPHP\RFC\RFC723x;
+use HTTPHP\RFC\Status;
 use HTTPHP\Symfony\Transport\RequestFactory;
 use HTTPHP\Transport\ResponseWriterInterface;
 use Psr\Http\Message\RequestInterface;
@@ -62,7 +62,7 @@ class RequestHandler implements RequestHandlerInterface
 
             return null;
         } catch (\Throwable $e) {
-            $writer->withStatus(RFC723x::STATUS_INTERNAL_SERVER_ERROR);
+            $writer->withStatus(Status::INTERNAL_SERVER_ERROR);
             $writer->writeBody($e->getMessage());
         }
 

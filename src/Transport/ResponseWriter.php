@@ -4,7 +4,7 @@ namespace HTTPHP\Transport;
 
 use Concurrent\Stream\StreamException;
 use Concurrent\Stream\WritableStream;
-use HTTPHP\RFC\RFC723x;
+use HTTPHP\RFC\Status;
 use HTTPHP\Transport\Exception\HeadersAlreadySentException;
 use HTTPHP\Transport\Exception\TransportException;
 
@@ -13,7 +13,7 @@ class ResponseWriter implements ResponseWriterInterface
     /**
      * @var int
      */
-    private $status = RFC723x::STATUS_OK;
+    private $status = Status::OK;
     /**
      * @var bool
      */
@@ -89,7 +89,7 @@ class ResponseWriter implements ResponseWriterInterface
      */
     private function writeStatusHeader()
     {
-        $this->stream->write(sprintf("HTTP/%s %d %s\r\n", $this->protocolVersion, $this->status, RFC723x::REASONS[$this->status] ?? ''));
+        $this->stream->write(sprintf("HTTP/%s %d %s\r\n", $this->protocolVersion, $this->status, Status::REASONS[$this->status] ?? ''));
         $this->stream->write(\sprintf("Server: %s\r\n", 'HTTPHP/0.1'));
     }
 

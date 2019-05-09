@@ -9,6 +9,7 @@ use GuzzleHttp\Psr7\Request;
 use HTTPHP\Transport\Exception\BadRequestException;
 use HTTPHP\Transport\Exception\LengthRequiredException;
 use HTTPHP\Transport\Exception\PayloadTooLargeException;
+use HTTPHP\Transport\Exception\RequestHeaderFieldsTooLarge;
 use HTTPHP\Transport\Exception\UpgradeRequiredException;
 use HTTPHP\Transport\Exception\VersionNotSupportedException;
 use Psr\Http\Message\RequestInterface;
@@ -43,7 +44,7 @@ class RequestReader implements RequestReaderInterface
         while(null !== ($chunk = $stream->read($chunkSize))) {
             $readed += $chunkSize;
             if ($readed >= $this->maxHeaderSize) {
-                throw new PayloadTooLargeException($this->maxHeaderSize);
+                throw new RequestHeaderFieldsTooLarge($this->maxHeaderSize);
             }
 
             $buffer .= $chunk;
